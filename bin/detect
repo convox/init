@@ -1,0 +1,10 @@
+#!/bin/bash
+
+/tmp/heroku-buildpack-ruby/bin/detect /tmp/app/ &>/dev/null   \
+  && /tmp/heroku-buildpack-ruby/bin/detect /tmp/app/          \
+  && exit 0
+
+
+/tmp/heroku-buildpack-python/bin/detect /tmp/app/ &>/dev/null \
+  && /tmp/heroku-buildpack-python/bin/detect /tmp/app/        \
+  && exit 0
