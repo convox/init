@@ -1,12 +1,10 @@
 #!/bin/bash
+PACKS="ruby nodejs clojure python java gradle scala php go"
 
-#!/bin/bash
+for PACK in $PACKS; do
+  bin="/tmp/heroku-buildpack-${PACK}/bin"
 
-/tmp/heroku-buildpack-ruby/bin/detect /tmp/app/ &>/dev/null   \
-  && /tmp/heroku-buildpack-ruby/bin/release /tmp/app/         \
-  && exit 0
+  $bin/detect  /tmp/app &>/dev/null || continue
+  $bin/release /tmp/app && exit 0
+done
 
-
-/tmp/heroku-buildpack-python/bin/detect /tmp/app/ &>/dev/null \
-  && /tmp/heroku-buildpack-python/bin/release /tmp/app/       \
-  && exit 0
