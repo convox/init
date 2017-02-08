@@ -44,6 +44,22 @@ default_process_types:
 		string(out))
 }
 
+func TestNodeDetect(t *testing.T) {
+	out, err := exec.Command("docker", "run", "-v", v("node-js-getting-started"), "convox/init", "detect").CombinedOutput()
+	assert.NoError(t, err)
+	assert.Equal(t, string(out), "Node.js\n")
+}
+
+func TestNodeRelease(t *testing.T) {
+	out, err := exec.Command("docker", "run", "-v", v("node-js-getting-started"), "convox/init", "release").CombinedOutput()
+	assert.NoError(t, err)
+	assert.Equal(t, `addons: []
+default_process_types:
+  web: npm start
+`,
+		string(out))
+}
+
 func TestPythonDetect(t *testing.T) {
 	out, err := exec.Command("docker", "run", "-v", v("python-getting-started"), "convox/init", "detect").CombinedOutput()
 	assert.NoError(t, err)
@@ -59,6 +75,39 @@ config_vars:
 
 addons:
   - heroku-postgresql
+`,
+		string(out))
+}
+
+func TestJavaDetect(t *testing.T) {
+	out, err := exec.Command("docker", "run", "-v", v("java-getting-started"), "convox/init", "detect").CombinedOutput()
+	assert.NoError(t, err)
+	assert.Equal(t, string(out), "Java\n")
+}
+
+func TestJavaRelease(t *testing.T) {
+	out, err := exec.Command("docker", "run", "-v", v("java-getting-started"), "convox/init", "release").CombinedOutput()
+	assert.NoError(t, err)
+	assert.Equal(t, `---
+addons:
+  - heroku-postgresql
+`,
+		string(out))
+}
+
+func TestPHPDetect(t *testing.T) {
+	out, err := exec.Command("docker", "run", "-v", v("php-getting-started"), "convox/init", "detect").CombinedOutput()
+	assert.NoError(t, err)
+	assert.Equal(t, string(out), "PHP\n")
+}
+
+func TestPHPRelease(t *testing.T) {
+	out, err := exec.Command("docker", "run", "-v", v("php-getting-started"), "convox/init", "release").CombinedOutput()
+	assert.NoError(t, err)
+	assert.Equal(t, `---
+addons: []
+default_process_types:
+  web: php -S 0.0.0.0:$PORT
 `,
 		string(out))
 }
