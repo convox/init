@@ -1,8 +1,9 @@
 FROM heroku/cedar
 
-ENV CURL_CONNECT_TIMEOUT=0 STACK=cedar-14
+ENV STACK=cedar-14 CURL_CONNECT_TIMEOUT=0 CURL_TIMEOUT=500
 
 WORKDIR /tmp
+RUN mkdir /tmp/cache
 
 RUN  git clone https://github.com/heroku/heroku-buildpack-ruby    \
   && git clone https://github.com/heroku/heroku-buildpack-nodejs  \
@@ -14,4 +15,5 @@ RUN  git clone https://github.com/heroku/heroku-buildpack-ruby    \
   && git clone https://github.com/heroku/heroku-buildpack-php     \
   && git clone https://github.com/heroku/heroku-buildpack-go
 
+COPY packs .
 COPY bin/ /usr/local/bin

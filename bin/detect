@@ -1,5 +1,5 @@
 #!/bin/bash
-PACKS="ruby nodejs clojure python java gradle scala php go"
+PACKS=$(cat /tmp/packs)
 
 for PACK in $PACKS; do
   bin="/tmp/heroku-buildpack-${PACK}/bin"
