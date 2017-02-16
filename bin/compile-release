@@ -5,7 +5,7 @@ for PACK in $PACKS; do
   bin="/tmp/heroku-buildpack-${PACK}/bin"
 
   $bin/detect  /tmp/app &>/dev/null || continue
-  $bin/compile /tmp/app /tmp/cache &>/dev/null
+  $bin/compile /tmp/app /tmp/cache &> /tmp/output || { cat /tmp/output; exit 1; }
   $bin/release /tmp/app && exit 0
 done
 
