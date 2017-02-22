@@ -4,9 +4,9 @@ PACKS=$(cat /tmp/packs)
 for PACK in $PACKS; do
   bin="/tmp/heroku-buildpack-${PACK}/bin"
 
-  $bin/detect  /tmp/app &>/dev/null || continue
-  cp -r /tmp/app /tmp/fauxapp # we don't want to leave complied files behind in the mounted dir
-  $bin/compile /tmp/fauxapp /tmp/cache &> /tmp/output || { cat /tmp/output; exit 1; }
-  $bin/release /tmp/fauxapp && exit 0
+  $bin/detect $APP &> /dev/null || continue
+  cp -r $APP /tmp/app # we don't want to leave complied files behind in the app dir
+  $bin/compile /tmp/app /tmp/cache &> /tmp/output || { cat /tmp/output; exit 1; }
+  $bin/release /tmp/app && exit 0
 done
 
