@@ -4,7 +4,7 @@ PACKS=$(cat /tmp/packs)
 for PACK in $PACKS; do
   bin="/tmp/heroku-buildpack-${PACK}/bin"
 
-  $bin/detect /tmp/app &>/dev/null || continue
-  $bin/detect /tmp/app && exit 0
+  $bin/detect $APP &>/dev/null || continue
+  $bin/detect $APP && exit 0
 done
 
